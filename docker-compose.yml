@@ -1,0 +1,11 @@
+services:
+  bot:
+    build: .
+    restart: unless-stopped
+    # DISCORD_TOKEN y GUILD_ID salen del archivo .env de esta carpeta.
+    env_file: .env
+    volumes:
+      - bot-data:/data
+
+volumes:
+  bot-data:
