@@ -1,8 +1,8 @@
 # Extensión de Innovate Academy
 
-Esta rama (`innovate-academy`) es el bot de `main` más la extensión de [Innovate Academy](https://innovateacademy.site/), que vive en `src/extensions/academy/`. Todo lo del README sigue valiendo; aquí está solo lo que añade.
+Este proyecto incluye la extensión de [Innovate Academy](https://innovateacademy.site/), que vive en `src/extensions/academy/` y se carga sola al arrancar. Todo lo del README sigue valiendo; aquí está solo lo que añade.
 
-Para traer mejoras del bot genérico: `git merge main` desde esta rama. La extensión no toca archivos del núcleo, así que no debería haber conflictos.
+La extensión no modifica ningún archivo del núcleo. Para usar el bot en otro servidor sin lo de la academia, basta con borrar las carpetas `src/extensions/academy/` y `tests/academy/`, o desactivar sus módulos con `/config modulo`.
 
 ## Qué añade
 

@@ -4,6 +4,8 @@ Bot propio, en español, para administrar un servidor de Discord: seguridad, mod
 
 Cada servidor activa solo los módulos que quiere (`/config modulos`), y las funciones propias de una comunidad concreta se añaden como extensiones sin tocar el núcleo ([docs/extensiones.md](docs/extensiones.md)).
 
+Este proyecto incluye la extensión de Innovate Academy (grupos y matrícula, dudas, asistencia, entregas, graduación, catálogo de cursos y más): [docs/innovate-academy.md](docs/innovate-academy.md).
+
 > **Estado:** el bot tiene pruebas automáticas con dobles de Discord, pero todavía no se ha ejecutado contra un servidor real. La primera puesta en marcha debe hacerse en un servidor de pruebas, siguiendo la lista del final.
 
 ## Qué incluye
