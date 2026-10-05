@@ -64,7 +64,7 @@ Para pasarlo a un servidor encendido 24/7, sigue [docs/hosting.md](docs/hosting.
 
 ### 4. Configurar desde Discord
 
-Todo se hace con `/config` (solo administradores):
+Todo se hace con `/config` (solo administradores). Qué canales y roles crear, y en qué orden, está en "Configuración completa desde cero", más abajo.
 
 | Comando | Para qué |
 |---|---|
@@ -86,6 +86,117 @@ El rol del bot tiene que estar **por encima** de los roles que deba asignar y de
 ### Activar solo lo que necesitas
 
 `/config modulos` muestra todos los módulos con su identificador. `/config modulo accion:Desactivar nombre:giveaways` apaga los sorteos: sus comandos desaparecen del servidor y deja de reaccionar, sin reiniciar el bot. La configuración, las copias y `/estado` no se pueden desactivar.
+
+## Configuración completa desde cero
+
+Esta guía deja el bot con **todas** sus funciones activas en un servidor recién creado. Da por hecho que el bot ya está invitado y en marcha (pasos 1 a 3 de "Puesta en marcha"). Los nombres de canales y roles son sugerencias: lo que cuenta es asignarlos con `/config`.
+
+Si solo quieres una parte, crea únicamente lo que necesites: cada función sin su canal o rol simplemente no actúa, y `/config revisar` te dice qué falta.
+
+### Paso 1: crear los roles
+
+En **Ajustes del servidor > Roles**:
+
+| Rol | Para qué | Se asigna al bot con |
+|---|---|---|
+| `Staff` | Quien modera y atiende tickets, eventos, sorteos y tareas | `/config rol` > Rol de staff |
+| `Supervisor` | Ve los reportes confidenciales y recibe las escaladas | `/config rol` > Rol de supervisor |
+| `Miembro` | Se da al aceptar las normas; es el que permite ver el servidor | `/config rol` > Rol de miembro verificado |
+| `Pagos` (opcional) | Atiende los tickets de pago y reembolso; si no existe, van a los supervisores | `/config rol` > Rol que atiende pagos y reembolsos |
+| `Graduado` (opcional) | Se da al graduarse de un curso | `/config rol` > Rol de graduado |
+| Rol automático (opcional) | Se da a todo el que entra, antes de verificarse | `/config rol` > Rol automático al entrar |
+| Roles de nivel (opcional) | Recompensa al alcanzar un nivel | `/config nivel-rol nivel:5 rol:@...` |
+
+Después **arrastra el rol del bot por encima de todos ellos**. Si queda por debajo de un rol, no puede darlo ni sancionar a quien lo tenga.
+
+Los roles de cada grupo de alumnos, los de interés y el de Embajador no hay que crearlos: los crea el bot cuando hacen falta.
+
+### Paso 2: crear los canales
+
+**Canales para todos**
+
+| Canal | Para qué lo usa el bot | Cómo se conecta |
+|---|---|---|
+| `#normas` | Botón **Acepto las normas** | Ejecutar ahí `/verificacion panel` |
+| `#bienvenida` | Mensaje de bienvenida a quien entra | `/config canal` > Canal de bienvenida |
+| `#general` | Recordatorio periódico con el botón a la web | `/config canal` > Canal general |
+| `#niveles` | Anuncios de subida de nivel (si no existe, se anuncian donde se escriba) | `/config canal` > Canal de niveles |
+| `#eventos` | Anuncios de eventos y talleres, con inscripción y aviso previo | `/config canal` > Canal de eventos |
+| `#retos` | Retos de programación (si no existe, se publican donde se use el comando) | `/config canal` > Canal de retos |
+| `#proyectos` | Escaparate de proyectos aprobados | `/config canal` > Canal de proyectos |
+| `#novedades` | Vídeos anunciados con `/tiktok` | `/config canal` > Canal de novedades |
+| `#soporte` | Botones para abrir tickets | Ejecutar ahí `/tickets panel` |
+| `#únete-al-equipo` | Botón **Postularme** | Ejecutar ahí `/postulaciones panel` |
+
+Los sorteos se publican en el canal donde se escriba `/sorteo crear`, y cada aviso semanal en el canal que se elija al programarlo, así que no necesitan canal propio.
+
+**Canales privados del staff**
+
+| Canal | Para qué lo usa el bot | Cómo se conecta |
+|---|---|---|
+| `#moderación` | Alertas del filtro, cuentas nuevas en revisión, modo raid, sanciones, tickets escalados, proyectos pendientes de aprobar y los informes de los lunes | `/config canal` > Canal de moderación |
+| `#logs` | "Bot iniciado", errores inesperados y transcripciones de tickets | `/config canal` > Canal de logs |
+| `#tareas` | Tareas del staff y avisos de vencimiento | `/config canal` > Canal de tareas |
+| `#postulaciones` | Postulaciones recibidas, con los votos del staff (si no existe, llegan a moderación) | `/config canal` > Canal de postulaciones |
+
+**Una categoría**
+
+| Categoría | Para qué | Cómo se conecta |
+|---|---|---|
+| `Tickets` | El bot crea dentro un canal privado por cada ticket | `/config canal` > Categoría de tickets |
+
+Si el bot no tiene el permiso Administrador (lo recomendado), en cada canal privado y en la categoría `Tickets` hay que añadir su rol con permiso para ver el canal y enviar mensajes. Sin eso no puede escribir ahí.
+
+Las categorías de cada grupo de alumnos, con sus canales `avisos`, `dudas` y `entregas`, las crea el bot con `/grupo crear`.
+
+### Paso 3: conectar roles y canales
+
+Con el bot en marcha, un administrador ejecuta un `/config rol` por cada rol del paso 1 y un `/config canal` por cada canal del paso 2. Después:
+
+| Comando | Para qué |
+|---|---|
+| `/config web url:https://tu-web.com` | Activa el recordatorio periódico |
+| `/config texto` | Personaliza la bienvenida y el recordatorio (opcional) |
+| `/config zona zona:America/Bogota` | Zona horaria de eventos y avisos, si no es la de España |
+| `/config revisar` | Debe responder "Todo en orden" |
+
+### Paso 4: activar la verificación sin dejar a nadie fuera
+
+El orden importa si el servidor ya tiene gente:
+
+1. `/verificacion existentes` da el rol `Miembro` a todos los miembros actuales.
+2. `/verificacion panel` en `#normas`.
+3. En **Ajustes del servidor > Roles**, quita a `@everyone` el permiso **Ver canales** y dáselo a `Miembro`.
+4. En `#normas`, permite a `@everyone` ver el canal pero no escribir.
+
+### Paso 5: publicar los paneles
+
+| Dónde | Comando |
+|---|---|
+| `#soporte` | `/tickets panel` |
+| `#únete-al-equipo` | `/postulaciones panel` |
+
+### Paso 6: organizar al staff
+
+- `/guardia asignar` para cada día de la semana: esa persona recibe la mención en las alertas.
+- Da el rol `Staff` y `Supervisor` a quien corresponda.
+
+### Paso 7: poner en marcha los cursos
+
+Por cada grupo de alumnos:
+
+1. `/grupo crear curso:Python nombre:"Octubre 2026" profesor:@...` crea el rol y la categoría del grupo.
+2. `/aviso-semanal programar` con el día y la hora de cada clase, el canal `avisos` del grupo, el **rol del grupo** y el enlace de Meet. Hay que programar uno por cada clase de la semana.
+3. `/codigo crear grupo:@...` genera los códigos de matrícula; cada alumno entra con `/canjear`.
+
+### Paso 8: avisar a la comunidad
+
+- Publica en `#normas` el aviso de privacidad (ver "Registro de mensajes y privacidad").
+- Explica a los miembros que `/avisos activar` les permite recibir por privado los recordatorios de clase y de eventos.
+
+### Comprobación final
+
+`/config ver` muestra todo lo asignado y `/config revisar` lo que falte. A partir de ahí, el bot hace solo el resto: bienvenida, filtro, niveles, registro, avisos programados, copias diarias e informes de los lunes.
 
 ## Seguridad
 

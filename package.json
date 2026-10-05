@@ -1,14 +1,14 @@
 {
   "name": "discord-admin-bot",
   "version": "1.0.0",
-  "description": "Bot administrador de Discord en español: seguridad, moderación, niveles, eventos, tickets y más",
+  "description": "Bot administrador de Discord en espa\u00f1ol: seguridad, moderaci\u00f3n, niveles, eventos, tickets y m\u00e1s",
   "private": true,
   "type": "module",
   "engines": {
     "node": ">=22.13"
   },
   "scripts": {
-    "start": "node --disable-warning=ExperimentalWarning src/index.js",
+    "start": "node init && node --disable-warning=ExperimentalWarning src/index.js",
     "test": "node --disable-warning=ExperimentalWarning --test"
   },
   "dependencies": {
